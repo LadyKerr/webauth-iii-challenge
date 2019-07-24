@@ -10,8 +10,13 @@ module.exports = {
 };
 
 //find all users
-function find() {
-  return db("users");
+function find(department) {
+  const query = db("users").select("id", "username", "department");
+
+  if (department) {
+    query.where({ department });
+  }
+  return query;
 }
 
 //find user with filter

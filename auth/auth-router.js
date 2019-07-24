@@ -8,7 +8,7 @@ const secrets = require("../config/secrets.js");
 //user can register
 router.post("/register", (req, res) => {
   let user = req.body;
-  const hash = bcrypt.hashSync(user.password, 10);
+  const hash = bcrypt.hashSync(user.password, 8);
   user.password = hash;
 
   Users.add(user)
@@ -31,7 +31,7 @@ router.post("/login", (req, res) => {
         const token = generateToken(user);
 
         res.status(200).json({
-          message: `Nice to see you ${user.username}! Here is your token`,
+          message: `Nice to see you ${user.username}!`,
           token
         });
       } else {
@@ -41,6 +41,7 @@ router.post("/login", (req, res) => {
       }
     })
     .catch(error => {
+      console.log(error);
       res.status(500).json(error);
     });
 });
@@ -48,12 +49,15 @@ router.post("/login", (req, res) => {
 function generateToken(user) {
   const payload = {
     subject: user.id,
-    username: user.username
+    username: user.username,
+    department: user.department
   };
 
   const options = {
     expiresIn: "1d"
   };
 
-  return jwt.sign(payload, secrets.jwtSecrets, options);
+  return jwt.sign(payload, secrets.jwtSecret, options);
 }
+
+module.exports = router;
