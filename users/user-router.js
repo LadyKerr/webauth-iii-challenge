@@ -4,6 +4,8 @@ const Users = require("./user-model");
 const restricted = require("../auth/auth-middleware");
 
 router.get("/", restricted, (req, res) => {
+  console.log("req.jwtToken", req.jwtToken);
+
   Users.find()
     .then(user => {
       res.status(200).json(user);

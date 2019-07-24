@@ -4,11 +4,8 @@ const helmet = require("helmet");
 
 const authRouter = require("../auth/auth-router");
 const userRouter = require("../users/user-router");
-// const serverMiddleware = require("./server-middleware");
 
 const server = express();
-
-// serverMiddleware(server);
 
 server.use(cors());
 server.use(helmet());
