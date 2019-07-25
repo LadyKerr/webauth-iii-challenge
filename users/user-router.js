@@ -5,7 +5,7 @@ const restricted = require("../auth/auth-middleware");
 
 router.get("/", restricted, (req, res) => {
   const department = req.jwtToken.department;
-  console.log("req.jwtToken", req.jwtToken);
+  // console.log("req.jwtToken", req.jwtToken);
 
   Users.find(department)
     .then(user => {
